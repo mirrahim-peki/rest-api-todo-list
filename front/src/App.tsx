@@ -1,10 +1,16 @@
-import { ListGroup } from "./features/list";
+import { Routes, Route, Navigate } from "react-router-dom";
+import TodoList from "./pages/TodoList";
+import TodoForm from "./pages/TodoForm";
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <ListGroup />
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/todos" />} />
+      <Route path="/todos" element={<TodoList />} />
+      <Route path="/todos/:id" element={<TodoForm />} />
+      <Route path="/todos/create" element={<TodoForm />} />
+    </Routes>
   );
-}
+};
+
 export default App;

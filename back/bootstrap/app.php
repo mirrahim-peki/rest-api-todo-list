@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 StartSession::class,
                 ShareErrorsFromSession::class,
                 ValidateCsrfToken::class,
-            ],
+            ], 
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
