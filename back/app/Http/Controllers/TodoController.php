@@ -2,64 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Todo;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('todos.index', compact('todos'));
+        return response()->json(Todo::all());
     }
+    public function show($id)
+    {
+        $todo = Todo::findOrFail($id);
+        return response()->json($todo);
+    }
+
     public function store(Request $request)
     {
-        $title = $request->input('title');
-        return view('todos.index', compact('title'));
+        $todo = Todo::create($request->only(['title', 'image']));
+        return response()->json($todo, 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(Request $request, $id)
     {
-        
+        $todo = Todo::findOrFail($id);
+        $todo->update($request->only(['title', 'image']));
+        return response()->json($todo);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy($id)
     {
-        //
+        Todo::findOrFail($id)->delete();
+        return response()->json(['message' => 'Deleted successfully']);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    
 }
+
+
